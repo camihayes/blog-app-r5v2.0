@@ -3,7 +3,9 @@ require 'rails_helper'
 RSpec.feature "Deleting an Article" do
   
   before do
-    @article = Article.create(title: "Title One", body: "Body of article one")
+    john = User.create(email: "john@example.com", password: "password")
+    login_as(john)
+    @article = Article.create(title: "Title One", body: "Body of article one", user: john)
   scenario "A user deletes an article" do
   end
   visit "/"
@@ -12,6 +14,6 @@ RSpec.feature "Deleting an Article" do
   click_link "Delete Article"
     
   expect(page).to have_content("Article has been deleted")
-  expect(current_path).to eq(articles_path)
+  expect(current_path).to eq(articles_path)  
   end
 end
